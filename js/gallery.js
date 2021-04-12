@@ -4,7 +4,6 @@ const refs = {
   galleryList: document.querySelector(".js-gallery"),
   lightbox: document.querySelector(".js-lightbox"),
   lightboxImg: document.querySelector(".lightbox__image"),
-  ligtboxOvrl: document.querySelector(".lightbox__overlay"),
   lightboxCloseBtn: document.querySelector(
     'button[data-action="close-lightbox"]'
   ),
@@ -28,21 +27,22 @@ const createGallery = images
   })
   .join("");
 
+const galleryMarkUp = createGallery;
 refs.galleryList.insertAdjacentHTML("afterbegin", createGallery);
 refs.galleryList.addEventListener("click", onModalOpen);
-// galleryList.addEventListener("click", galleryListClick);
+refs.lightboxCloseBtn.addEventListener("click", onModalClose);
 
-// function galleryListClick(evt) {
-//   if (!evt.target.classlist.contains("gallery__image")) {
-//     return;
-//   }
-//   const swatchImage = evt.currentTarget;
-//   const parentImg = swatchImage.closest("gallery__link");
-//   console.log(parentImg);
-// }
+function onModalOpen(e) {
+  if (!e.target.classList.contains("gallery__image")) {
+    return;
+  }
+  const sourceImg = e.target.dataset.source;
+  refs.lightboxImg.setAttribute("src", sourceImg);
+  refs.lightbox.classList.add("is-open");
+  e.preventDefault();
+}
 
-function onModalOpen(evt) { 
-    evt.target.
-
-
+function onModalClose() {
+  refs.lightbox.classList.remove("is-open");
+  refs.lightboxImg.setAttribute("src", "");
 }
